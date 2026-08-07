@@ -91,35 +91,35 @@
 --     ('Old Van', 8, 5, NULL);
 --
 
---1) вывести кузова, которые не используются ни в одной машине.
+-- вывести кузова, которые не используются ни в одной машине.
 SELECT b.id,
        b.name
 FROM idea_db."505618".car_bodies b
 LEFT JOIN idea_db."505618".cars c ON c.body_id = b.id
 WHERE c.id IS NULL;
 
---2) вывести двигатели, которые не используются ни в одной машине.
+-- вывести двигатели, которые не используются ни в одной машине.
 SELECT e.id,
        e.name
 FROM idea_db."505618".car_engines e
 LEFT JOIN idea_db."505618".cars c ON c.engine_id = e.id
 WHERE c.id IS NULL;
 
---3) вывести коробки передач, которые не используются ни в одной машине.
+-- вывести коробки передач, которые не используются ни в одной машине.
 SELECT t.id,
        t.name
 FROM idea_db."505618".car_transmissions t
 LEFT JOIN idea_db."505618".cars c ON c.engine_id = t.id
 WHERE c.id IS NULL;
 
---4) вывести список всех машин и название кузова, если оно указано.
+-- вывести список всех машин и название кузова, если оно указано.
 SELECT c.id,
        c.name as car_name,
        b.name as body_name
 FROM idea_db."505618".cars c
-LEFT JOIN idea_db."505618".car_bodies b ON c.body_id = b.id
+LEFT JOIN idea_db."505618".car_bodies b ON c.body_id = b.id;
 
---5) вывести только те машины, у которых одновременно указаны:
+-- вывести только те машины, у которых одновременно указаны:
 -- кузов;
 -- двигатель;
 -- коробка передач.
@@ -134,7 +134,7 @@ JOIN idea_db."505618".car_bodies b ON b.id = c.body_id
 JOIN idea_db."505618".car_engines e ON e.id = c.engine_id
 JOIN idea_db."505618".car_transmissions t ON t.id = c.transmission_id;
 
---6) вывести машины, у которых есть двигатель, но нет кузова.
+-- вывести машины, у которых есть двигатель, но нет кузова.
 SELECT c.id,
        c.name as car_name,
        b.name as body_name,
@@ -144,7 +144,7 @@ JOIN idea_db."505618".car_engines e ON e.id = c.engine_id
 LEFT JOIN idea_db."505618".car_bodies b ON b.id = c.body_id
 WHERE c.body_id IS NULL;
 
---7) вывести все кузова и машины, которые их используют.
+-- вывести все кузова и машины, которые их используют.
 SELECT b.id AS body_id,
        b.name AS body_name,
        c.id AS car_id,
@@ -152,14 +152,14 @@ SELECT b.id AS body_id,
 FROM idea_db."505618".car_bodies b
 LEFT JOIN idea_db."505618".cars c on b.id = c.body_id;
 
---8) вывести неиспользуемые двигатели.
+-- вывести неиспользуемые двигатели.
 SELECT e.id,
        e.name as engine_name
 FROM idea_db."505618".car_engines e
 LEFT JOIN idea_db."505618".cars c ON c.engine_id = e.id
 WHERE c.engine_id IS NULL;
 
---9) вывести машины и все их детали, но только для машин с автоматической коробкой передач.
+-- вывести машины и все их детали, но только для машин с автоматической коробкой передач.
 SELECT c.id,
        c.name as car_name,
        b.name as body_name,
@@ -171,7 +171,7 @@ LEFT JOIN idea_db."505618".car_engines e ON e.id = c.engine_id
 LEFT JOIN idea_db."505618".car_transmissions t ON t.id = c.transmission_id
 WHERE t.name ILIKE 'automatic%';
 
---10) вывести машины, у которых отсутствует хотя бы одна деталь.
+-- вывести машины, у которых отсутствует хотя бы одна деталь.
 SELECT c.id,
        c.name as car_name,
        b.name as body_name,
@@ -186,7 +186,7 @@ WHERE c.body_id IS NULL
     OR c.transmission_id IS NULL;
 
 
---11) вывести все машины с двигателями, но коробку передач подключить так, чтобы машины без коробки тоже попали в результат.
+-- вывести все машины с двигателями, но коробку передач подключить так, чтобы машины без коробки тоже попали в результат.
 SELECT c.id,
        c.name as car_name,
        e.name as engine_name,
@@ -195,7 +195,7 @@ FROM idea_db."505618".cars c
 JOIN idea_db."505618".car_engines e ON e.id = c.engine_id
 LEFT JOIN idea_db."505618".car_transmissions t ON t.id = c.transmission_id;
 
---12) вывести все неиспользуемые детали в едином формате.
+-- вывести все неиспользуемые детали в едином формате.
 SELECT 'body' AS detail_type,
        b.id AS detail_id,
        b.name AS detail_name
@@ -230,7 +230,7 @@ WHERE NOT EXISTS (
         WHERE c.transmission_id = t.id
     );
 
---13) вывести машины и детали только для кузовов определенных типов.
+-- вывести машины и детали только для кузовов определенных типов.
 -- Нужно вывести машины, у которых кузов относится к одному из типов:
 -- sedan
 -- hatchback
